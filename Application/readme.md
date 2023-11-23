@@ -2,4 +2,4 @@ Sample app from: https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcor
 
 Test Build restore run -2
 
-docker build
+docker build again
