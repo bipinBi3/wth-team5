@@ -1,5 +1,5 @@
 on: workflow_dispatch
-name: Azure ARM
+name: Azure Bicep Deployment
 jobs:
     build-and-deploy:
       runs-on: ubuntu-latest
