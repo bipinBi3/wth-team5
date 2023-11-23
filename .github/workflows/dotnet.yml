@@ -45,6 +45,16 @@ jobs:
           run: docker build -t ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }} --build-arg build_version=${{ env.tag }} ${{ env.dockerFolderPath }}
         - name: docker push
           run: docker push ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}
-          
-      
-  
+
+  cd: 
+      # Log into Azure
+      runs-on: ubuntu-latest
+      steps:      
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}          
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: '6xzvsawd2eix4-dev'
+          images: '6xzvsawd2eix4wthreg.azurecr.io/wth/dotnetcoreapp:3'
