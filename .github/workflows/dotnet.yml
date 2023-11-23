@@ -34,4 +34,17 @@ jobs:
       run: dotnet build ./Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --verbosity normal
     - name: Test
       run: dotnet test ./Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --verbosity normal
+
+  dockerpush:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: docker login
+          run: docker login ${{ env.registryName }} -u $ {{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }}
+        - name: docker build
+          run: docker build -t ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }} --build-arg build_version=${{ env.tag }} ${{ env.dockerFolderPath }}
+        - name: docker push
+          run: docker push ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}
+          
+      
   
