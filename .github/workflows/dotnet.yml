@@ -1,7 +1,6 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
 
 on:
   push:
@@ -12,7 +11,11 @@ on:
     branches: [ "main" ]
     paths: 
      - 'Application/*'
-    
+env:
+    registryName: 6xzvsawd2eix4wthreg.azurecr.io
+    repositoryName: wth/dotnetcoreapp
+    dockerFolderPath: Application/src/RazorPagesTestSample
+    tag: ${{ github.run_number }}   
 
 jobs:
   build:
@@ -31,3 +34,4 @@ jobs:
       run: dotnet build ./Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --verbosity normal
     - name: Test
       run: dotnet test ./Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --verbosity normal
+  
