@@ -46,7 +46,7 @@ jobs:
         - name: docker push
           run: docker push ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}
 
-  cd: 
+  cd-dev: 
       # Log into Azure
       runs-on: ubuntu-latest
       steps:      
@@ -57,4 +57,32 @@ jobs:
       - uses: azure/webapps-deploy@v2
         with:
           app-name: '6xzvsawd2eix4-dev'
+          images: '6xzvsawd2eix4wthreg.azurecr.io/wth/dotnetcoreapp:3'
+
+  cd-test: 
+      # Log into Azure
+      runs-on: ubuntu-latest
+      environment: test
+      steps:      
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}          
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: '6xzvsawd2eix4-test'
+          images: '6xzvsawd2eix4wthreg.azurecr.io/wth/dotnetcoreapp:3'
+
+  cd-prod: 
+      # Log into Azure
+      runs-on: ubuntu-latest
+      environment: prod
+      steps:      
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}          
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: '6xzvsawd2eix4-prod'
           images: '6xzvsawd2eix4wthreg.azurecr.io/wth/dotnetcoreapp:3'
